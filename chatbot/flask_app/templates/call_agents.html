@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Call Agents - Bristol Real Estate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .agent-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .stats-badge {
+            background-color: #f8f9fa;
+            border-radius: 20px;
+            padding: 5px 10px;
+            margin-right: 10px;
+            font-size: 0.8rem;
+            color: #495057;
+        }
+        .agent-status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .status-active {
+            background-color: #28a745;
+        }
+        .status-training {
+            background-color: #ffc107;
+        }
+        .status-inactive {
+            background-color: #dc3545;
+        }
+        .call-history-item {
+            border-left: 3px solid #007bff;
+            padding-left: 15px;
+            margin-bottom: 10px;
+        }
+        .call-status-scheduled {
+            color: #6c757d;
+        }
+        .call-status-in_progress {
+            color: #007bff;
+        }
+        .call-status-completed {
+            color: #28a745;
+        }
+        .call-status-cancelled {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Bristol Real Estate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listings">Listings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/agents">Human Agents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/call-agents">AI Call Agents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1>SCT Call Agents</h1>
+                <p class="lead">SCT AI Call Agents make cold calls, follow up with leads, and handle support calls 24/7, sounding human, never tiring, and following instructions flawlessly.
+.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Available AI Agents</h5>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createAgentModal">Create New Agent</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="agentsList" class="row">
+                            <!-- Agents will be loaded here -->
+                            <div class="col-12 text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Schedule a Call</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="scheduleCallForm">
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phoneNumber" placeholder="+1234567890" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="scriptType" class="form-label">Call Script</label>
+                                <select class="form-select" id="scriptType" required>
+                                    <option value="">Select a script</option>
+                                    <option value="lead_qualification">Lead Qualification</option>
+                                    <option value="appointment_scheduling">Appointment Scheduling</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="agentSelect" class="form-label">Select Agent</label>
+                                <select class="form-select" id="agentSelect">
+                                    <option value="">Auto-select best agent</option>
+                                    <!-- Agents will be loaded here -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="scheduledTime" class="form-label">When to Call</label>
+                                <select class="form-select" id="scheduledTime" required>
+                                    <option value="now">Call Now</option>
+                                    <option value="30min">In 30 Minutes</option>
+                                    <option value="1hour">In 1 Hour</option>
+                                    <option value="3hours">In 3 Hours</option>
+                                    <option value="tomorrow">Tomorrow</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="callContext" class="form-label">Additional Context</label>
+                                <textarea class="form-control" id="callContext" rows="3" placeholder="Any specific information for the agent"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Schedule Call</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Call History</h5>
+                        <div>
+                            <select id="statusFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
+                                <option value="">All Statuses</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <button id="refreshHistory" class="btn btn-outline-secondary btn-sm">Refresh</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="callHistory">
+                            <!-- Call history will be loaded here -->
+                            <div class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Agent Modal -->
+    <div class="modal fade" id="createAgentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New AI Agent</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createAgentForm">
+                        <div class="mb-3">
+                            <label for="agentName" class="form-label">Agent Name</label>
+                            <input type="text" class="form-control" id="agentName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="voiceProfile" class="form-label">Voice Profile</label>
+                            <select class="form-select" id="voiceProfile" required>
+                                <option value="natural_female_1">Natural Female 1</option>
+                                <option value="natural_female_2">Natural Female 2</option>
+                                <option value="natural_male_1">Natural Male 1</option>
+                                <option value="natural_male_2">Natural Male 2</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Specialization</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Lead qualification" id="specLeadQual">
+                                <label class="form-check-label" for="specLeadQual">Lead Qualification</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Appointment scheduling" id="specAppointment">
+                                <label class="form-check-label" for="specAppointment">Appointment Scheduling</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Property inquiries" id="specProperty">
+                                <label class="form-check-label" for="specProperty">Property Inquiries</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Follow-ups" id="specFollowup">
+                                <label class="form-check-label" for="specFollowup">Follow-ups</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Language</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="English" id="langEnglish" checked>
+                                <label class="form-check-label" for="langEnglish">English</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="submitCreateAgent">Create Agent</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call Details Modal -->
+    <div class="modal fade" id="callDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Call Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="callDetailsContent">
+                    <!-- Call details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger d-none" id="cancelCallBtn">Cancel Call</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let agents = [];
+        let callHistory = [];
+
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial data
+            loadAgents();
+            loadCallHistory();
+
+            // Set up event listeners
+            document.getElementById('scheduleCallForm').addEventListener('submit', scheduleCall);
+            document.getElementById('submitCreateAgent').addEventListener('click', createAgent);
+            document.getElementById('refreshHistory').addEventListener('click', loadCallHistory);
+            document.getElementById('statusFilter').addEventListener('change', loadCallHistory);
+            document.getElementById('cancelCallBtn').addEventListener('click', cancelCall);
+        });
+
+        // Load AI agents
+        function loadAgents() {
+            fetch('/api/call-agents/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        agents = data.agents;
+                        renderAgents();
+                        populateAgentSelect();
+                    } else {
+                        showError('Failed to load agents');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading agents:', error);
+                    showError('Error loading agents. Please try again.');
+                });
+        }
+
+        // Render agents list
+        function renderAgents() {
+            const agentsList = document.getElementById('agentsList');
+            
+            if (agents.length === 0) {
+                agentsList.innerHTML = '<div class="col-12 text-center py-4"><p>No AI agents available. Create your first agent!</p></div>';
+                return;
+            }
+
+            let html = '';
+            agents.forEach(agent => {
+                let statusClass = '';
+                if (agent.status === 'active') statusClass = 'status-active';
+                else if (agent.status === 'training') statusClass = 'status-training';
+                else statusClass = 'status-inactive';
+
+                html += `
+                <div class="col-md-6 mb-3">
+                    <div class="agent-card">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="mb-0">${agent.name}</h5>
+                            <span><span class="agent-status ${statusClass}"></span>${agent.status}</span>
+                        </div>
+                        <p class="text-muted small">Voice: ${agent.voice_profile.replace('_', ' ')}</p>
+                        <div class="mb-2">
+                            ${agent.specialization.map(s => `<span class="badge bg-light text-dark me-1">${s}</span>`).join('')}
+                        </div>
+                        <div class="d-flex mt-3">
+                            <span class="stats-badge"><i class="bi bi-telephone"></i> ${agent.calls_handled || 0} calls</span>
+                            <span class="stats-badge"><i class="bi bi-clock"></i> ${agent.avg_call_duration || 0} min avg</span>
+                            <span class="stats-badge"><i class="bi bi-graph-up"></i> ${Math.round((agent.success_rate || 0) * 100)}% success</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            agentsList.innerHTML = html;
+        }
+
+        // Populate agent select dropdown
+        function populateAgentSelect() {
+            const agentSelect = document.getElementById('agentSelect');
+            // Clear existing options except the first one
+            while (agentSelect.options.length > 1) {
+                agentSelect.remove(1);
+            }
+            
+            // Add active agents to the dropdown
+            agents.filter(agent => agent.status === 'active').forEach(agent => {
+                const option = document.createElement('option');
+                option.value = agent.id;
+                option.textContent = agent.name;
+                agentSelect.appendChild(option);
+            });
+        }
+
+        // Load call history
+        function loadCallHistory() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            let url = '/api/call-agents/calls/history';
+            if (statusFilter) {
+                url += `?status=${statusFilter}`;
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        callHistory = data.calls;
+                        renderCallHistory();
+                    } else {
+                        showError('Failed to load call history');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading call history:', error);
+                    showError('Error loading call history. Please try again.');
+                });
+        }
+
+        // Render call history
+        function renderCallHistory() {
+            const historyContainer = document.getElementById('callHistory');
+            
+            if (callHistory.length === 0) {
+                historyContainer.innerHTML = '<div class="text-center py-4"><p>No call history available.</p></div>';
+                return;
+            }
+
+            let html = '';
+            callHistory.forEach(call => {
+                const date = new Date(call.scheduled_time);
+                const formattedDate = date.toLocaleString();
+                
+                let statusClass = '';
+                if (call.status === 'scheduled') statusClass = 'call-status-scheduled';
+                else if (call.status === 'in_progress') statusClass = 'call-status-in_progress';
+                else if (call.status === 'completed') statusClass = 'call-status-completed';
+                else if (call.status === 'cancelled') statusClass = 'call-status-cancelled';
+
+                html += `
+                <div class="call-history-item p-3 mb-3 bg-light rounded">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-1">${call.agent_name} → ${formatPhone(call.phone_number)}</h6>
+                            <p class="mb-1 small">${call.script_type.replace('_', ' ')} | ${formattedDate}</p>
+                        </div>
+                        <div>
+                            <span class="badge ${statusClass}">${call.status}</span>
+                            <button class="btn btn-sm btn-outline-primary ms-2" onclick="viewCallDetails('${call.call_id}')">Details</button>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            historyContainer.innerHTML = html;
+        }
+
+        // Schedule a call
+        function scheduleCall(event) {
+            event.preventDefault();
+            
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const scriptType = document.getElementById('scriptType').value;
+            const agentId = document.getElementById('agentSelect').value;
+            const scheduledTime = document.getElementById('scheduledTime').value;
+            const context = document.getElementById('callContext').value;
+
+            // Prepare data
+            const data = {
+                phone_number: phoneNumber,
+                script_type: scriptType,
+                scheduled_time: scheduledTime
+            };
+
+            if (agentId) data.agent_id = agentId;
+            if (context) data.context = { notes: context };
+
+            // Call API
+            fetch('/api/call-agents/calls', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Call scheduled successfully!');
+                    document.getElementById('scheduleCallForm').reset();
+                    loadCallHistory();
+                } else {
+                    showError(data.error || 'Failed to schedule call');
+                }
+            })
+            .catch(error => {
+                console.error('Error scheduling call:', error);
+                showError('Error scheduling call. Please try again.');
+            });
+        }
+
+        // Create a new AI agent
+        function createAgent() {
+            const name = document.getElementById('agentName').value;
+            const voiceProfile = document.getElementById('voiceProfile').value;
+            
+            // Get specializations
+            const specialization = [];
+            if (document.getElementById('specLeadQual').checked) specialization.push('Lead qualification');
+            if (document.getElementById('specAppointment').checked) specialization.push('Appointment scheduling');
+            if (document.getElementById('specProperty').checked) specialization.push('Property inquiries');
+            if (document.getElementById('specFollowup').checked) specialization.push('Follow-ups');
+            
+            // Get languages
+            const language = [];
+            if (document.getElementById('langEnglish').checked) language.push('English');
+
+            // Validate
+            if (!name) {
+                showError('Agent name is required');
+                return;
+            }
+            if (specialization.length === 0) {
+                showError('Select at least one specialization');
+                return;
+            }
+            if (language.length === 0) {
+                showError('Select at least one language');
+                return;
+            }
+
+            // Prepare data
+            const data = {
+                name,
+                voice_profile: voiceProfile,
+                specialization,
+                language
+            };
+
+            // Call API
+            fetch('/api/call-agents/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Agent created successfully! It will be ready in approximately 2 hours.');
+                    document.getElementById('createAgentForm').reset();
+                    bootstrap.Modal.getInstance(document.getElementById('createAgentModal')).hide();
+                    loadAgents();
+                } else {
+                    showError(data.error || 'Failed to create agent');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating agent:', error);
+                showError('Error creating agent. Please try again.');
+            });
+        }
+
+        // View call details
+        function viewCallDetails(callId) {
+            fetch(`/api/call-agents/calls/${callId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const call = data.details;
+                        const modal = new bootstrap.Modal(document.getElementById('callDetailsModal'));
+                        const content = document.getElementById('callDetailsContent');
+                        const cancelBtn = document.getElementById('cancelCallBtn');
+                        
+                        // Format date
+                        const scheduledDate = new Date(call.scheduled_time);
+                        const formattedDate = scheduledDate.toLocaleString();
+                        
+                        // Prepare HTML
+                        let html = `
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Call Information</h6>
+                                    <p><strong>Call ID:</strong> ${call.call_id}</p>
+                                    <p><strong>Status:</strong> <span class="badge call-status-${call.status}">${call.status}</span></p>
+                                    <p><strong>Scheduled Time:</strong> ${formattedDate}</p>
+                                    <p><strong>Phone Number:</strong> ${formatPhone(call.phone_number)}</p>
+                                    <p><strong>Script Type:</strong> ${call.script_type.replace('_', ' ')}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Agent Information</h6>
+                                    <p><strong>Agent:</strong> ${call.agent_name}</p>
+                                    <p><strong>Agent ID:</strong> ${call.agent_id}</p>
+                                </div>
+                            </div>`;
+                        
+                        // Add context if available
+                        if (call.context && Object.keys(call.context).length > 0) {
+                            html += `
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <h6>Additional Context</h6>
+                                        <div class="p-3 bg-light rounded">
+                                            <pre class="mb-0">${JSON.stringify(call.context, null, 2)}</pre>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        }
+                        
+                        // Show cancel button only for scheduled calls
+                        if (call.status === 'scheduled') {
+                            cancelBtn.classList.remove('d-none');
+                            cancelBtn.setAttribute('data-call-id', call.call_id);
+                        } else {
+                            cancelBtn.classList.add('d-none');
+                        }
+                        
+                        content.innerHTML = html;
+                        modal.show();
+                    } else {
+                        showError(data.error || 'Failed to load call details');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading call details:', error);
+                    showError('Error loading call details. Please try again.');
+                });
+        }
+
+        // Cancel a scheduled call
+        function cancelCall() {
+            const callId = document.getElementById('cancelCallBtn').getAttribute('data-call-id');
+            
+            fetch(`/api/call-agents/calls/${callId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Call cancelled successfully!');
+                    bootstrap.Modal.getInstance(document.getElementById('callDetailsModal')).hide();
+                    loadCallHistory();
+                } else {
+                    showError(data.error || 'Failed to cancel call');
+                }
+            })
+            .catch(error => {
+                console.error('Error cancelling call:', error);
+                showError('Error cancelling call. Please try again.');
+            });
+        }
+
+        // Helper function to format phone numbers
+        function formatPhone(phone) {
+            if (!phone) return 'Unknown';
+            // Remove any non-digit characters
+            const cleaned = phone.replace(/\D/g, '');
+            // Format based on length
+            if (cleaned.length === 10) {
+                return `(${cleaned.substring(0, 3)}) ${cleaned.substring(3, 6)}-${cleaned.substring(6)}`;
+            } else if (cleaned.length === 11) {
+                return `+${cleaned.substring(0, 1)} (${cleaned.substring(1, 4)}) ${cleaned.substring(4, 7)}-${cleaned.substring(7)}`;
+            }
+            return phone; // Return original if can't format
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            // You can implement a toast or alert system here
+            alert(message);
+        }
+
+        // Show error message
+        function showError(message) {
+            // You can implement a toast or alert system here
+            alert('Error: ' + message);
+        }
+    </script>
+</body>
+</html>

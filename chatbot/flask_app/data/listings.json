@@ -1,0 +1,10 @@
+[
+  {"id":1,"title":"3-bed house Clifton","description":"Beautiful 3 bed, 2 bath house in Clifton with sea view","price":250000,"location":"Clifton","bedrooms":3,"baths":2,"area_sqft":2200,"images":["https://picsum.photos/seed/house1/800/500"]},
+  {"id":2,"title":"2-bed flat DHA","description":"Cozy 2 bed flat near park in DHA, ideal for couples","price":120000,"location":"DHA","bedrooms":2,"baths":1,"area_sqft":950,"images":["https://picsum.photos/seed/flat1/800/500"]},
+  {"id":3,"title":"3-bed apartment PECHS","description":"Spacious 3 bed apartment in PECHS, close to markets","price":180000,"location":"PECHS","bedrooms":3,"baths":2,"area_sqft":1600,"images":["https://picsum.photos/seed/apartment1/800/500"]},
+  {"id":4,"title":"4-bed villa Bahria Town","description":"Modern 4 bed villa in Bahria Town with lawn and garage","price":340000,"location":"Bahria Town","bedrooms":4,"baths":4,"area_sqft":3200,"images":["https://picsum.photos/seed/villa1/800/500"]},
+  {"id":5,"title":"Studio Gulshan","description":"Affordable studio in Gulshan ideal for students","price":60000,"location":"Gulshan","bedrooms":1,"baths":1,"area_sqft":450,"images":["https://picsum.photos/seed/studio1/800/500"]},
+  {"id":6,"title":"5-bed house F-7 Islamabad","description":"Elegant 5 bed house in F-7 Islamabad, embassy area","price":520000,"location":"F-7","bedrooms":5,"baths":5,"area_sqft":5200,"images":["https://picsum.photos/seed/house2/800/500"]},
+  {"id":7,"title":"2-bed apartment Gulberg Lahore","description":"Sunlit 2 bed apartment in Gulberg near MM Alam road","price":190000,"location":"Gulberg","bedrooms":2,"baths":2,"area_sqft":1200,"images":["https://picsum.photos/seed/apartment2/800/500"]},
+  {"id":8,"title":"3-bed townhouse DHA Phase 6","description":"Brand new 3 bed townhouse in DHA Phase 6","price":210000,"location":"DHA","bedrooms":3,"baths":3,"area_sqft":1800,"images":["https://picsum.photos/seed/townhouse1/800/500"]}
+]

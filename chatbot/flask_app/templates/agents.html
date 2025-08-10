@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Agents | Real Estate{% endblock %}
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">Agents</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for a in agents %}
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">{{ a.name }}</h3>
+          <span class="text-xs px-2 py-1 rounded bg-gray-100">{{ a.status }}</span>
+        </div>
+        <p class="text-sm text-gray-600 mt-1">Channels: {{ a.channels | join(', ') }}</p>
+        <p class="text-sm text-gray-600">Skills: {{ a.skills | join(', ') }}</p>
+        <p class="text-sm text-gray-600">Load: {{ a.current_load }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+

@@ -1,0 +1,33 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#f0f8ff" stroke="#4682b4" stroke-width="2" />
+  
+  <!-- Headset -->
+  <path d="M60 90 C60 70, 80 50, 100 50 C120 50, 140 70, 140 90" fill="none" stroke="#4682b4" stroke-width="6" stroke-linecap="round" />
+  <rect x="50" y="90" width="20" height="30" rx="5" fill="#4682b4" />
+  <rect x="130" y="90" width="20" height="30" rx="5" fill="#4682b4" />
+  
+  <!-- Face -->
+  <circle cx="100" cy="100" r="30" fill="#ffffff" stroke="#4682b4" stroke-width="2" />
+  
+  <!-- AI Circuit Pattern -->
+  <line x1="85" y1="85" x2="95" y2="95" stroke="#4682b4" stroke-width="2" />
+  <line x1="115" y1="85" x2="105" y2="95" stroke="#4682b4" stroke-width="2" />
+  <line x1="90" y1="105" x2="110" y2="105" stroke="#4682b4" stroke-width="2" />
+  <circle cx="85" cy="85" r="3" fill="#4682b4" />
+  <circle cx="115" cy="85" r="3" fill="#4682b4" />
+  <circle cx="95" cy="95" r="3" fill="#4682b4" />
+  <circle cx="105" cy="95" r="3" fill="#4682b4" />
+  <circle cx="90" cy="105" r="3" fill="#4682b4" />
+  <circle cx="110" cy="105" r="3" fill="#4682b4" />
+  
+  <!-- Sound Waves -->
+  <path d="M150 80 Q160 90, 150 100" fill="none" stroke="#4682b4" stroke-width="2" stroke-linecap="round" />
+  <path d="M155 75 Q170 90, 155 105" fill="none" stroke="#4682b4" stroke-width="2" stroke-linecap="round" />
+  <path d="M160 70 Q180 90, 160 110" fill="none" stroke="#4682b4" stroke-width="2" stroke-linecap="round" />
+  
+  <!-- Phone -->
+  <rect x="80" y="140" width="40" height="20" rx="5" fill="#4682b4" />
+  <rect x="85" y="135" width="30" height="5" rx="2" fill="#4682b4" />
+  <circle cx="100" cy="150" r="5" fill="#ffffff" />
+</svg>

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "property1",
+    "title": "3-bed apartment Clifton",
+    "address": "123 Clifton Avenue, Clifton, Bristol BS8 1AA",
+    "price": 450000,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "type": "apartment",
+    "description": "Luxurious 3-bedroom apartment in the heart of Clifton Village. This stunning property features a spacious living room with hardwood flooring, a modern kitchen with island, and a master bedroom with en-suite bathroom. Walking distance to shops, restaurants, and the Suspension Bridge.",
+    "features": ["Hardwood flooring", "Modern kitchen", "En-suite bathroom", "Central location", "High ceilings", "Period features", "Recently renovated"],
+    "area": "Clifton",
+    "status": "For Sale",
+    "tourImages": [
+      "/images/property1_1.jpg.svg",
+      "/images/property1_2.jpg.svg",
+      "/images/property1_3.jpg.svg"
+    ]
+  },
+  {
+    "id": "property2",
+    "title": "4-bed house Redland",
+    "address": "45 Parklands Road, Redland, Bristol BS6 7SB",
+    "price": 525000,
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "type": "house",
+    "description": "Beautiful 4-bedroom family home in desirable Redland. Features include an open-plan living/dining/kitchen area, landscaped garden, off-street parking, and a garage. Close to excellent schools, parks, and transport links.",
+    "features": ["Open-plan living", "Landscaped garden", "Off-street parking", "Garage", "Close to schools", "Recently renovated kitchen", "South-facing garden"],
+    "area": "Redland",
+    "status": "For Sale",
+    "tourImages": [
+      "/images/property2_1.jpg.svg",
+      "/images/property2_2.jpg.svg",
+      "/images/property2_3.jpg.svg"
+    ]
+  },
+  {
+    "id": "property3",
+    "title": "2-bed apartment City Centre",
+    "address": "78 Harbourside View, City Centre, Bristol BS1 5TY",
+    "price": 1800,
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "type": "apartment",
+    "description": "Modern 2-bedroom apartment with stunning harbour views. This contemporary property features floor-to-ceiling windows, a balcony, open-plan living space, and secure parking. Located in the heart of Bristol's vibrant harbourside area.",
+    "features": ["Harbour views", "Balcony", "Floor-to-ceiling windows", "Secure parking", "Concierge service", "Lift access", "Underfloor heating"],
+    "area": "City Centre",
+    "status": "For Rent",
+    "rentPeriod": "monthly"
+  },
+  {
+    "id": "property4",
+    "title": "3-bed townhouse Clifton",
+    "address": "12 Victoria Square, Clifton, Bristol BS8 4ES",
+    "price": 2200,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "type": "townhouse",
+    "description": "Elegant 3-bedroom Georgian townhouse in prestigious Victoria Square. This property retains many original features including high ceilings, sash windows, and ornate fireplaces. It offers a modern kitchen, private garden, and is just minutes from Clifton Village.",
+    "features": ["Period features", "Private garden", "High ceilings", "Sash windows", "Ornate fireplaces", "Modern kitchen", "Prime location"],
+    "area": "Clifton",
+    "status": "For Rent",
+    "rentPeriod": "monthly"
+  },
+  {
+    "id": "property5",
+    "title": "2-bed house Southville",
+    "address": "27 Southville Road, Southville, Bristol BS3 1DJ",
+    "price": 375000,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "type": "house",
+    "description": "Charming 2-bedroom Victorian terraced house in popular Southville. Recently renovated throughout with a modern kitchen-diner, stylish bathroom, and low-maintenance rear garden. Close to North Street's independent shops and cafes, and within walking distance of the city centre.",
+    "features": ["Recently renovated", "Victorian features", "Modern kitchen-diner", "Rear garden", "Close to amenities", "Walking distance to city centre", "Popular location"],
+    "area": "Southville",
+    "status": "For Sale"
+  }
+]

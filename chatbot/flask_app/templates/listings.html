@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Listings | Real Estate{% endblock %}
+{% block content %}
+  <div class="flex items-center gap-3 mb-4">
+    <form method="get" class="flex-1">
+      <input name="q" value="{{ request.args.get('q','') }}" class="w-full border rounded px-3 py-2" placeholder="Search area, bedrooms, price..." />
+    </form>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for l in listings %}
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <img src="{{ l.images[0] if l.images else 'https://picsum.photos/seed/placeholder/800/500' }}" class="w-full h-40 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">{{ l.title }}</h3>
+          <p class="text-gray-600 text-sm">{{ l.location }} • {{ l.bedrooms }} bed • {{ l.baths }} bath • {{ l.area_sqft }} sqft</p>
+          <p class="mt-2">Price: <b>{{ l.price }}</b></p>
+          <p class="text-gray-700 text-sm mt-2">{{ l.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+

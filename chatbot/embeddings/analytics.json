@@ -1,0 +1,159 @@
+{
+  "conversations": [
+    {
+      "sessionId": "session-001",
+      "timestamp": "2023-08-10T14:30:00Z",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm looking for a 3-bedroom house in Clifton",
+          "timestamp": "2023-08-10T14:30:00Z"
+        },
+        {
+          "role": "bot",
+          "content": "I have a beautiful 3-bedroom apartment in Clifton that might interest you. It's located at 123 Clifton Avenue and features hardwood flooring, a modern kitchen, and an en-suite bathroom. Would you like to know more about this property?",
+          "timestamp": "2023-08-10T14:30:05Z"
+        },
+        {
+          "role": "user",
+          "content": "Yes, what's the price?",
+          "timestamp": "2023-08-10T14:30:15Z"
+        },
+        {
+          "role": "bot",
+          "content": "The property is priced at £450,000. It's a great investment in a prime location. Would you like to schedule a viewing or speak with an agent about this property?",
+          "timestamp": "2023-08-10T14:30:20Z"
+        },
+        {
+          "role": "user",
+          "content": "I'd like to speak with an agent",
+          "timestamp": "2023-08-10T14:30:30Z"
+        }
+      ],
+      "messageCount": 5,
+      "leadConverted": true,
+      "duration": 30,
+      "topics": ["Clifton", "3-bedroom", "apartment", "price", "agent contact"]
+    },
+    {
+      "sessionId": "session-002",
+      "timestamp": "2023-08-10T15:45:00Z",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Do you have any properties for rent in the city centre?",
+          "timestamp": "2023-08-10T15:45:00Z"
+        },
+        {
+          "role": "bot",
+          "content": "Yes, I have a modern 2-bedroom apartment with stunning harbour views in the City Centre. It's available for rent at £1,800 per month. Would you like more details about this property?",
+          "timestamp": "2023-08-10T15:45:05Z"
+        },
+        {
+          "role": "user",
+          "content": "That's a bit out of my budget. Do you have anything cheaper?",
+          "timestamp": "2023-08-10T15:45:15Z"
+        },
+        {
+          "role": "bot",
+          "content": "I understand. Unfortunately, I don't have any other rental properties in the City Centre in our current listings. Would you be interested in properties in nearby areas like Southville or Bedminster, which might be more affordable?",
+          "timestamp": "2023-08-10T15:45:20Z"
+        },
+        {
+          "role": "user",
+          "content": "No thanks, I'll look elsewhere",
+          "timestamp": "2023-08-10T15:45:30Z"
+        }
+      ],
+      "messageCount": 5,
+      "leadConverted": false,
+      "duration": 30,
+      "topics": ["City Centre", "rent", "apartment", "budget", "price"]
+    },
+    {
+      "sessionId": "session-003",
+      "timestamp": "2023-08-11T10:15:00Z",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm interested in investment properties in Southville",
+          "timestamp": "2023-08-11T10:15:00Z"
+        },
+        {
+          "role": "bot",
+          "content": "Great choice! Southville is an up-and-coming area with good investment potential. I have a charming 2-bedroom Victorian terraced house in Southville, priced at £375,000. It's been recently renovated and is close to North Street's independent shops and cafes. Would you like to know more?",
+          "timestamp": "2023-08-11T10:15:05Z"
+        },
+        {
+          "role": "user",
+          "content": "What's the potential rental yield?",
+          "timestamp": "2023-08-11T10:15:15Z"
+        },
+        {
+          "role": "bot",
+          "content": "Based on current market rates, a 2-bedroom property in Southville could achieve a rental income of approximately £1,200-£1,400 per month, giving you an estimated gross rental yield of around 4-4.5%. Would you like to speak with our investment specialist, Emma Williams, who can provide more detailed information?",
+          "timestamp": "2023-08-11T10:15:20Z"
+        },
+        {
+          "role": "user",
+          "content": "Yes, I'd like to speak with Emma",
+          "timestamp": "2023-08-11T10:15:30Z"
+        }
+      ],
+      "messageCount": 5,
+      "leadConverted": true,
+      "duration": 30,
+      "topics": ["Southville", "investment", "house", "rental yield", "agent contact"]
+    }
+  ],
+  "leads": [
+    {
+      "id": "lead-001",
+      "sessionId": "session-001",
+      "timestamp": "2023-08-10T14:31:00Z",
+      "name": "John Smith",
+      "phone": "+44 7700 123456",
+      "email": "john.smith@example.com",
+      "propertyInterest": "property1",
+      "preferredTime": "2023-08-11T10:00:00Z",
+      "source": "chat",
+      "callbackRequested": true,
+      "callbackStatus": "scheduled",
+      "notes": "Interested in 3-bed apartment in Clifton, looking to buy within 3 months"
+    },
+    {
+      "id": "lead-002",
+      "sessionId": "session-003",
+      "timestamp": "2023-08-11T10:16:00Z",
+      "name": "Alice Brown",
+      "phone": "+44 7700 789012",
+      "email": "alice.brown@example.com",
+      "propertyInterest": "property5",
+      "preferredTime": "now",
+      "source": "chat",
+      "callbackRequested": true,
+      "callbackStatus": "completed",
+      "notes": "Investor looking for properties in Southville, specifically interested in rental yield"
+    }
+  ],
+  "callbacks": [
+    {
+      "id": "callback-001",
+      "leadId": "lead-001",
+      "agentId": "agent1",
+      "scheduledTime": "2023-08-11T10:00:00Z",
+      "status": "scheduled",
+      "notes": "Scheduled callback with Sarah Johnson to discuss Clifton apartment"
+    },
+    {
+      "id": "callback-002",
+      "leadId": "lead-002",
+      "agentId": "agent3",
+      "scheduledTime": "2023-08-11T10:20:00Z",
+      "status": "completed",
+      "notes": "Emma Williams spoke with client about investment opportunities in Southville",
+      "duration": 15,
+      "outcome": "Viewing scheduled for property5 on 2023-08-12T14:00:00Z"
+    }
+  ]
+}

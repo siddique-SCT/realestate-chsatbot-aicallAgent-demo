@@ -1,0 +1,102 @@
+[
+  {
+    "id": "agent1",
+    "name": "Sarah Johnson",
+    "title": "Senior Property Consultant",
+    "email": "sarah.johnson@example.com",
+    "phone": "+44 7700 900123",
+    "specialization": ["Residential Sales", "Luxury Properties"],
+    "areas": ["Clifton", "Redland", "Cotham"],
+    "bio": "With over 10 years of experience in Bristol's property market, Sarah specializes in high-end properties in Clifton and surrounding areas. Her extensive knowledge of the local market and dedication to client satisfaction have earned her numerous industry awards.",
+    "image": "https://randomuser.me/api/portraits/women/32.jpg",
+    "rating": 4.9,
+    "reviewCount": 127,
+    "languages": ["English", "French"],
+    "availability": {
+      "status": "available",
+      "workingHours": "Mon-Fri: 9am-5pm",
+      "nextAvailable": "Today"
+    },
+    "communicationChannels": ["phone", "email", "video"]
+  },
+  {
+    "id": "agent2",
+    "name": "David Chen",
+    "title": "Lettings Manager",
+    "email": "david.chen@example.com",
+    "phone": "+44 7700 900456",
+    "specialization": ["Residential Lettings", "Student Accommodation"],
+    "areas": ["City Centre", "Redland", "Bishopston"],
+    "bio": "David has been helping tenants find their perfect homes for over 7 years. He specializes in city centre apartments and student lettings, with particular expertise in the Redland and Bishopston areas. Known for his efficiency and attention to detail.",
+    "image": "https://randomuser.me/api/portraits/men/45.jpg",
+    "rating": 4.7,
+    "reviewCount": 98,
+    "languages": ["English", "Mandarin"],
+    "availability": {
+      "status": "available",
+      "workingHours": "Mon-Sat: 10am-6pm",
+      "nextAvailable": "Today"
+    },
+    "communicationChannels": ["phone", "email", "whatsapp"]
+  },
+  {
+    "id": "agent3",
+    "name": "Emma Williams",
+    "title": "Property Investment Specialist",
+    "email": "emma.williams@example.com",
+    "phone": "+44 7700 900789",
+    "specialization": ["Investment Properties", "Buy-to-Let"],
+    "areas": ["Southville", "Bedminster", "Totterdown"],
+    "bio": "Emma specializes in investment properties and buy-to-let opportunities in Bristol's up-and-coming areas. With a background in finance and 5 years in real estate, she provides valuable insights on rental yields and property appreciation potential.",
+    "image": "https://randomuser.me/api/portraits/women/68.jpg",
+    "rating": 4.8,
+    "reviewCount": 76,
+    "languages": ["English"],
+    "availability": {
+      "status": "busy",
+      "workingHours": "Mon-Fri: 9am-5:30pm",
+      "nextAvailable": "Tomorrow"
+    },
+    "communicationChannels": ["phone", "email", "video"]
+  },
+  {
+    "id": "agent4",
+    "name": "James Taylor",
+    "title": "New Homes Consultant",
+    "email": "james.taylor@example.com",
+    "phone": "+44 7700 901234",
+    "specialization": ["New Developments", "First-Time Buyers"],
+    "areas": ["Harbourside", "Temple Quay", "Filton"],
+    "bio": "James specializes in new build properties and developments across Bristol. He's particularly passionate about helping first-time buyers navigate the property market and find their perfect starter home. His knowledge of government schemes and mortgage options is extensive.",
+    "image": "https://randomuser.me/api/portraits/men/22.jpg",
+    "rating": 4.6,
+    "reviewCount": 54,
+    "languages": ["English"],
+    "availability": {
+      "status": "available",
+      "workingHours": "Tue-Sat: 9am-6pm",
+      "nextAvailable": "Today"
+    },
+    "communicationChannels": ["phone", "email"]
+  },
+  {
+    "id": "agent5",
+    "name": "Priya Patel",
+    "title": "Commercial Property Specialist",
+    "email": "priya.patel@example.com",
+    "phone": "+44 7700 905678",
+    "specialization": ["Commercial Properties", "Office Space", "Retail Units"],
+    "areas": ["City Centre", "Temple Meads", "Aztec West"],
+    "bio": "Priya has over 8 years of experience in commercial real estate, specializing in office spaces and retail units across Bristol. Her client portfolio includes both local businesses and international corporations looking to establish a presence in the city.",
+    "image": "https://randomuser.me/api/portraits/women/75.jpg",
+    "rating": 4.9,
+    "reviewCount": 42,
+    "languages": ["English", "Gujarati", "Hindi"],
+    "availability": {
+      "status": "unavailable",
+      "workingHours": "Mon-Fri: 9am-5pm",
+      "nextAvailable": "Next week"
+    },
+    "communicationChannels": ["phone", "email", "video"]
+  }
+]

@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block title %}AI Chat | Real Estate{% endblock %}
+{% block content %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section class="bg-white p-4 rounded-lg shadow">
+        <h1 class="text-2xl font-semibold mb-2">AI Chat</h1>
+        <p class="text-gray-600 mb-3">Try: 3 bed Clifton</p>
+
+        <div id="messages" class="h-72 overflow-auto border rounded p-2 bg-gray-50"></div>
+        <div class="flex gap-2 mt-2">
+          <input id="text" class="flex-1 border rounded px-2 py-2" placeholder="Type message..." />
+          <button id="send" class="px-3 py-2 bg-black text-white rounded">Send</button>
+        </div>
+      </section>
+
+      <section class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-xl font-semibold mb-2">Request Callback</h3>
+        <p class="text-gray-600 mb-3">Our AI call agent can call you immediately to discuss your property needs.</p>
+        <div class="space-y-2">
+          <input id="name" class="w-full border rounded px-2 py-2" placeholder="Name" />
+          <input id="phone" class="w-full border rounded px-2 py-2" placeholder="Phone" />
+          <input id="email" class="w-full border rounded px-2 py-2" placeholder="Email" />
+          <label class="block text-sm text-gray-700"><input id="consent" type="checkbox" class="mr-2"/> I consent to be contacted by phone, including by AI call agents that sound like real humans.</label>
+          <div class="flex flex-wrap gap-2">
+            <button id="leadBtn" class="px-3 py-2 bg-black text-white rounded">Submit</button>
+            <button id="aiCallBtn" class="px-3 py-2 bg-blue-600 text-white rounded">Call Me Now (AI Agent)</button>
+            <button id="waBtn" class="px-3 py-2 bg-emerald-600 text-white rounded">WhatsApp Me</button>
+            <a id="waDeepLink" target="_blank" class="px-3 py-2 bg-green-700 text-white rounded" href="https://wa.me/{{ whatsapp_agent_phone | replace('+','') }}?text={{ 'Hi I want to talk about properties' | urlencode }}">Open WhatsApp Chat</a>
+            <a id="jitsiBtn" target="_blank" class="px-3 py-2 bg-indigo-600 text-white rounded" href="https://meet.jit.si/{{ jitsi_room }}">Start Voice/Video (Jitsi)</a>
+            <button id="connectBtn" class="px-3 py-2 bg-slate-700 text-white rounded">Instant Connect (Auto Route)</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const messagesEl = document.getElementById('messages');
+      const textEl = document.getElementById('text');
+      const sendBtn = document.getElementById('send');
+      const leadBtn = document.getElementById('leadBtn');
+      const aiCallBtn = document.getElementById('aiCallBtn');
+      const waBtn = document.getElementById('waBtn');
+      const connectBtn = document.getElementById('connectBtn');
+
+      function addMessage(from, text) {
+        const row = document.createElement('div');
+        row.className = 'msg';
+        row.innerHTML = `<b>${from}:</b> ${text}`;
+        messagesEl.appendChild(row);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      addMessage('bot', 'Hi! I can help you find properties. Try: "3 bed Clifton"');
+
+      sendBtn.onclick = async () => {
+        const text = textEl.value.trim();
+        if (!text) return;
+        addMessage('you', text);
+        textEl.value = '';
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+        addMessage('bot', data.reply || '');
+      };
+
+      leadBtn.onclick = async () => {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const consent = document.getElementById('consent').checked;
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, consent })
+        });
+        const data = await res.json();
+        alert(data.status || 'saved');
+      };
+
+      aiCallBtn.onclick = async () => {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const consent = document.getElementById('consent').checked;
+        
+        if (!phone) { alert('Enter a phone number first'); return; }
+        if (!consent) { alert('Please consent to be contacted'); return; }
+        
+        // Call the AI call agent API directly with scheduled_time set to 'now' for instant calling
+        const res = await fetch('/api/call-agents/calls', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone_number: phone,
+            script_type: 'lead_qualification',
+            scheduled_time: 'now', // This ensures the call happens immediately
+            context: {
+              customer_name: name,
+              customer_email: email,
+              source: 'website_form'
+            }
+          })
+        });
+        
+        const data = await res.json();
+        if (data.success) {
+          alert('AI call agent will call you shortly!');
+        } else {
+          alert('Failed to schedule AI call: ' + (data.error || 'Unknown error'));
+        }
+      };
+      
+      waBtn.onclick = async () => {
+        const phone = document.getElementById('phone').value;
+        if (!phone) { alert('Enter a phone number first'); return; }
+        const res = await fetch('/api/callback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ provider: 'twilio', phone, channel: 'whatsapp' })
+        });
+        const data = await res.json();
+        if (data.status === 'callback_queued') alert('WhatsApp/voice callback queued (if configured).');
+        else alert('Callback request sent. Configure Twilio env to enable.');
+      }
+
+      connectBtn.onclick = async () => {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const preferred = ['voice','whatsapp','jitsi'];
+        const res = await fetch('/api/connect', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ customer: { name, phone }, preferred_channels: preferred })
+        });
+        const data = await res.json();
+        if (data.status === 'routed') {
+          const a = data.connection.action;
+          if (a.kind === 'jitsi') {
+            window.open(a.url, '_blank');
+          } else if (a.kind === 'whatsapp' && a.deeplink) {
+            window.open(a.deeplink, '_blank');
+          } else {
+            alert('Routed to voice/WhatsApp. Check your phone/messages.');
+          }
+        } else {
+          alert('No agent available right now; you are queued.');
+        }
+      }
+    </script>
+{% endblock %}
+
+

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Real Estate{% endblock %}
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">Requests & Conversations</h1>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="md:col-span-2">
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-3 border-b font-semibold">Inbox</div>
+        <div class="divide-y">
+          {% for it in items %}
+            <div class="p-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs uppercase text-gray-500">{{ it.type }}</span>
+                <span class="text-xs text-gray-400">{{ it.time }}</span>
+              </div>
+              {% if it.type == 'chat' %}
+                <div class="mt-1 text-sm"><b>Q:</b> {{ it.message }}</div>
+                <div class="text-sm text-gray-700"><b>A:</b> {{ it.reply }}</div>
+                <div class="mt-2 flex gap-2">
+                  <button class="px-2 py-1 text-xs bg-slate-700 text-white rounded" onclick='archive("{{ it.id }}")'>Archive</button>
+                </div>
+              {% elif it.type == 'lead' %}
+                <div class="mt-1 text-sm">{{ it.name }} — {{ it.phone }} — {{ it.email }}</div>
+                <div class="mt-2 flex gap-2">
+                  <button class="px-2 py-1 text-xs bg-emerald-600 text-white rounded" onclick='connectCustomer({"name":"{{ it.name }}","phone":"{{ it.phone }}"})'>Instant Connect</button>
+                  <button class="px-2 py-1 text-xs bg-slate-700 text-white rounded" onclick='archive("{{ it.id }}")'>Archive</button>
+                </div>
+              {% elif it.type == 'connect' %}
+                <div class="mt-1 text-sm">Connect: {{ it.customer.name }} — Agent: {{ it.agent.name }}</div>
+                <div class="text-xs text-gray-600">Action: {{ it.action.kind }}</div>
+                <div class="mt-2 flex gap-2">
+                  <button class="px-2 py-1 text-xs bg-slate-700 text-white rounded" onclick='archive("{{ it.id }}")'>Archive</button>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-3 border-b font-semibold">Agents</div>
+        <div class="p-3 space-y-2">
+          {% for a in agents %}
+            <div class="border rounded p-2">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold text-sm">{{ a.name }}</span>
+                <span class="text-xs px-2 py-1 rounded bg-gray-100">{{ a.status }}</span>
+              </div>
+              <div class="text-xs text-gray-600">Channels: {{ a.channels | join(', ') }}</div>
+              <div class="text-xs text-gray-600">Load: {{ a.current_load }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow mt-4">
+        <div class="p-3 border-b font-semibold">Active Connections</div>
+        <div class="p-3 space-y-2">
+          {% for id, c in active.items() %}
+            <div class="border rounded p-2 text-sm">
+              <div>ID: {{ c.id }}</div>
+              <div>Agent: {{ c.agent_id }}</div>
+              <div>Customer: {{ c.customer.name }} — {{ c.customer.phone }}</div>
+              <div>Action: {{ c.action.kind }}</div>
+            </div>
+          {% else %}
+            <div class="text-sm text-gray-500">None</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function archive(id) {
+      const res = await fetch('/api/dashboard/action', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({action:'archive', id})
+      });
+      location.reload();
+    }
+    async function connectCustomer(cust) {
+      const res = await fetch('/api/dashboard/action', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({action:'connect', customer: cust, preferred_channels:['voice','whatsapp','jitsi']})
+      });
+      const data = await res.json();
+      if (data.status === 'routed') {
+        const a = data.connection.action;
+        if (a.kind === 'jitsi') window.open(a.url, '_blank');
+        else if (a.kind === 'whatsapp' && a.deeplink) window.open(a.deeplink, '_blank');
+        else alert('Routed to voice/WhatsApp.');
+      } else alert('No agent available.');
+    }
+  </script>
+{% endblock %}
+
+

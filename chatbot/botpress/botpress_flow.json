@@ -1,0 +1,38 @@
+{
+  "id": "realestate_lead_flow",
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "text",
+      "text": "Hi! Are you looking to buy or rent?"
+    },
+    {
+      "id": "ask_criteria",
+      "type": "text",
+      "text": "Great \u2014 tell me area and number of beds (e.g., '3 bed Clifton')."
+    },
+    {
+      "id": "show_listings",
+      "type": "text",
+      "text": "I found some listings \u2014 would you like a callback to discuss?"
+    },
+    {
+      "id": "capture_lead",
+      "type": "form",
+      "fields": [
+        "name",
+        "phone",
+        "email",
+        "consent"
+      ],
+      "text": "Please provide your contact details and consent to be contacted."
+    },
+    {
+      "id": "webhook",
+      "type": "action",
+      "action": "triggerWebhook",
+      "url": "/api/lead"
+    }
+  ]
+}
