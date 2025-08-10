@@ -1,9 +1,0 @@
-flask==3.0.3
-flask-cors==4.0.1
-requests==2.32.3
-scikit-learn==1.5.2
-python-dotenv==1.0.1
-
-# Optional voice calling via Twilio
-# Uncomment if you plan to use Twilio's Python SDK instead of raw REST
-# twilio==9.3.4
