@@ -50,8 +50,3 @@ Notes:
 - Flask demo (Python):
   - Double-click `scripts/run_flask_demo.cmd`
 
-https://mszconsultancy.com/
-
-https://brightcall.ai/
-
-https://www.youtube.com/watch?v=vCTWVPcI3C4 can be considered as reference to build  chatbot that will interact with customers, replay contexualy, using AI models, NLP etc. If he wants to talk, or even reastate staff /agens will captre his number and instanlty call ... you may create entirely new or enhance existing one. Also cloud based solution like Azure will be proposed
