@@ -6,7 +6,6 @@ It includes:
 - Backend: Node/Express server with `/api/chat`, `/api/lead`, `/api/callback`.
 - Embeddings: Python script to index listing descriptions with Sentence-Transformers + FAISS (demo).
 - Botpress flow skeleton (JSON).
-- BrightCall.ai integration for real-time agent connection.
 - Azure AI services integration for enhanced NLP capabilities.
 
 **How to run (local demo)**
